@@ -16,10 +16,11 @@ import kotlinx.html.p
 
 fun main(args: Array<String>) {
     val port = args.indexOf("-p").takeIf { it >= 0 }?.let { args[it + 1] }?.toIntOrNull() ?: 8080
+    val pathPrefix = args.indexOf("-pp").takeIf { it >= 0 }?.let { args[it + 1] }?.let { "$it/" } ?: ""
 
     embeddedServer(Netty, port) {
         routing {
-            get("delay") {
+            get("${pathPrefix}delay") {
                 call.parameters["duration"]?.toLongOrNull()?.let { duration ->
                     call.parameters["url"]?.let { url ->
                         call.respondDelayed(duration, url)
