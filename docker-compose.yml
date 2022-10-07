@@ -6,14 +6,14 @@ services:
       context: .
       args:
         port: 9002
-        pathprefix: "/http"
+        pathprefix: "/sc"
     restart: unless-stopped
     expose:
       - 9002
     labels:
       - "traefik.enable=true"
       - "traefik.port=9002"
-      - "traefik.http.routers.httpdelay.rule=Host(`kmb.zieger.dev/httpdelay`)"
+      - "traefik.http.routers.httpdelay.rule=Host(`kmb.zieger.dev/sc/delay`)"
       - "traefik.http.routers.httpdelay.entrypoints=websecure"
       - "traefik.http.routers.httpdelay.tls.certresolver=myresolver"
       - "traefik.http.routers.httpdelay.middlewares=log4shell, compression, ratelimit"
