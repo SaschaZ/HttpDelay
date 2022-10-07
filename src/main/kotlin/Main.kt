@@ -1,6 +1,7 @@
 import io.ktor.client.*
 import io.ktor.client.engine.okhttp.*
 import io.ktor.client.request.*
+import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.html.*
@@ -66,11 +67,15 @@ private val client = HttpClient(OkHttp) {
 @OptIn(InternalAPI::class)
 private suspend fun ApplicationCall.respondDelayed(duration: Long, url: String) {
     val beforeCall = System.currentTimeMillis()
-    val input = client.get(url).content
+    val input = client.get(url)
 
     val callDuration = System.currentTimeMillis() - beforeCall
     if (callDuration < duration)
         delay(duration - callDuration)
 
-    respondBytes(input.toByteArray())
+    input.headers.forEach { s, strings ->
+        headersOf(s, strings)
+    }
+
+    respondBytes(input.content.toByteArray())
 }
