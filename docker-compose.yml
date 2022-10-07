@@ -12,7 +12,7 @@ services:
       - 9002
     labels:
       - "traefik.enable=true"
-      - "traefik.port=9001"
+      - "traefik.port=9002"
       - "traefik.http.routers.httpdelay.rule=Host(`kmb.zieger.dev/httpdelay`)"
       - "traefik.http.routers.httpdelay.entrypoints=websecure"
       - "traefik.http.routers.httpdelay.tls.certresolver=myresolver"
