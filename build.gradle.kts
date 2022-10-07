@@ -29,6 +29,8 @@ dependencies {
 
     implementation("io.ktor:ktor-client-core:$ktorVersion")
     implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
+
+    implementation("org.slf4j:slf4j-log4j12:2.0.3")
 }
 
 tasks.test {

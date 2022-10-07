@@ -13,10 +13,13 @@ import kotlinx.html.body
 import kotlinx.html.br
 import kotlinx.html.h3
 import kotlinx.html.p
+import org.apache.log4j.BasicConfigurator
 
 fun main(args: Array<String>) {
-    val port = args.indexOf("-p").takeIf { it >= 0 }?.let { args[it + 1] }?.toIntOrNull() ?: 8080
-    val pathPrefix = args.indexOf("-pp").takeIf { it >= 0 }?.let { args[it + 1] }?.let { "$it/" } ?: ""
+    BasicConfigurator.configure()
+
+    val port = args.getArg("-p")?.toIntOrNull() ?: 8080
+    val pathPrefix = args.getArg("-pp")?.let { "$it/" } ?: ""
 
     embeddedServer(Netty, port) {
         routing {
@@ -30,6 +33,9 @@ fun main(args: Array<String>) {
         }
     }.start(true)
 }
+
+fun Array<String>.getArg(name: String): String? =
+    indexOf(name).takeIf { it >= 0 }?.let { get(it + 1) }
 
 private suspend fun ApplicationCall.respondDelayDescription() {
     respondHtml {
@@ -53,7 +59,6 @@ private val client = HttpClient(OkHttp) {
     }
 }
 
-@Suppress("OPT_IN_IS_NOT_ENABLED")
 @OptIn(InternalAPI::class)
 private suspend fun ApplicationCall.respondDelayed(duration: Long, url: String) {
     delay(duration)

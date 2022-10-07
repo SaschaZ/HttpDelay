@@ -1,0 +1,24 @@
+version: "3.3"
+
+services:
+  httpdelay:
+    build:
+      context: .
+      args:
+        port: 9002
+        path: "/httpdelay"
+    restart: unless-stopped
+    expose:
+      - 9002
+    labels:
+      - "traefik.enable=true"
+      - "traefik.port=9001"
+      - "traefik.http.routers.httpdelay.rule=Host(`kmb.zieger.dev/httpdelay`)"
+      - "traefik.http.routers.httpdelay.entrypoints=websecure"
+      - "traefik.http.routers.httpdelay.tls.certresolver=myresolver"
+      - "traefik.http.routers.httpdelay.middlewares=log4shell, compression, ratelimit"
+
+networks:
+  default:
+    external:
+      name: web
