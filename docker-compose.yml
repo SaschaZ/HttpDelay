@@ -5,8 +5,8 @@ services:
     build:
       context: .
       args:
-        PORT: 9002
-        PATH: "/httpdelay"
+        port: 9002
+        path: "/httpdelay"
     restart: unless-stopped
     expose:
       - 9002

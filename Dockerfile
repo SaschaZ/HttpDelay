@@ -9,6 +9,8 @@ RUN apk add --update openjdk16-jre && \
     mkdir /project
 WORKDIR /project
 COPY --from=Build /project/HttpDelay.jar /project/
-ARG PORT=8080
-ARG PATH="/"
+ARG port=8080
+ENV PORT ${port}
+ARG path="/"
+ENV PATH ${path}
 CMD ["sh", "-c", "java -jar HttpDelay.jar -p ${PORT} -pp ${PATH}"]

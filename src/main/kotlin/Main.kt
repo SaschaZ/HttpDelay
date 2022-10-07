@@ -15,6 +15,7 @@ import kotlinx.html.h3
 import kotlinx.html.p
 import org.apache.log4j.BasicConfigurator
 import org.apache.log4j.Logger
+import kotlin.system.measureTimeMillis
 
 fun main(args: Array<String>) {
     BasicConfigurator.configure()
@@ -63,8 +64,12 @@ private val client = HttpClient(OkHttp) {
 
 @OptIn(InternalAPI::class)
 private suspend fun ApplicationCall.respondDelayed(duration: Long, url: String) {
-    delay(duration)
-
+    val beforeCall = System.currentTimeMillis()
     val input = client.get(url).content
+
+    val callDuration = System.currentTimeMillis() - beforeCall
+    if (callDuration < duration)
+        delay(duration - callDuration)
+
     respondBytes(input.toByteArray())
 }
