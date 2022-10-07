@@ -14,8 +14,6 @@ import kotlinx.html.br
 import kotlinx.html.h3
 import kotlinx.html.p
 import org.apache.log4j.BasicConfigurator
-import org.apache.log4j.Logger
-import kotlin.system.measureTimeMillis
 
 fun main(args: Array<String>) {
     BasicConfigurator.configure()
@@ -48,6 +46,9 @@ private suspend fun ApplicationCall.respondDelayDescription() {
                 +"duration: duration in ms to delay"
                 br()
                 +"url: encoded url to respond"
+            }
+            p {
+                +"example: ../delay?duration=5000&url=https://www.google.de"
             }
         }
     }
