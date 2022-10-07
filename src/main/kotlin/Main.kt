@@ -58,7 +58,7 @@ private suspend fun ApplicationCall.respondDelayDescription() {
 private val client = HttpClient(OkHttp) {
     engine {
         config {
-            followSslRedirects(true)
+            followRedirects(true)
             followSslRedirects(true)
         }
     }
