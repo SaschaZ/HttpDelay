@@ -11,6 +11,6 @@ WORKDIR /project
 COPY --from=Build /project/HttpDelay.jar /project/
 ARG port=8080
 ENV PORT ${port}
-ARG path="/"
-ENV PATH ${path}
-CMD ["sh", "-c", "java -jar HttpDelay.jar -p ${PORT} -pp ${PATH}"]
+ARG pathprefix="/"
+ENV PATHPREFIX ${pathprefix}
+CMD ["sh", "-c", "java -jar HttpDelay.jar -p ${PORT} -pp ${PATHPREFIX}"]

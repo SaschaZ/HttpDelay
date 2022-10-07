@@ -6,7 +6,7 @@ services:
       context: .
       args:
         port: 9002
-        path: "/httpdelay"
+        pathprefix: "/httpdelay"
     restart: unless-stopped
     expose:
       - 9002
