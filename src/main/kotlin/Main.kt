@@ -14,12 +14,14 @@ import kotlinx.html.br
 import kotlinx.html.h3
 import kotlinx.html.p
 import org.apache.log4j.BasicConfigurator
+import org.apache.log4j.Logger
 
 fun main(args: Array<String>) {
     BasicConfigurator.configure()
 
     val port = args.getArg("-p")?.toIntOrNull() ?: 8080
     val pathPrefix = args.getArg("-pp")?.let { "$it/" } ?: ""
+    println("port=$port - pathPrefix=$pathPrefix")
 
     embeddedServer(Netty, port) {
         routing {
