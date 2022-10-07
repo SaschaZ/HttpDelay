@@ -73,9 +73,5 @@ private suspend fun ApplicationCall.respondDelayed(duration: Long, url: String) 
     if (callDuration < duration)
         delay(duration - callDuration)
 
-    input.headers.forEach { s, strings ->
-        headersOf(s, strings)
-    }
-
-    respondBytes(input.content.toByteArray())
+    respondBytes(input.content.toByteArray(), input.contentType())
 }
